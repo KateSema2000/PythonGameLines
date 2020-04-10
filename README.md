@@ -10,4 +10,4 @@ h1 Проект по Python: "Персонажи и комиксы"
 
 **Предполагаемый макет интерфейса:**
 
-![screenshot of sample](http://webdesign.ru.net/images/Heydon_min.jpg)
+![screenshot of sample](https://github.com/KateSema2000/ProjectPython/blob/master/plan/interface.png)
