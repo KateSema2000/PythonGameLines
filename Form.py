@@ -3,6 +3,18 @@ from PIL import Image, ImageTk
 import Field
 
 
+class Pictures:
+    Empty = Image.open('pictures/empty.png')
+    Path = Image.open('pictures/path.png')
+    Ball = [[], [], []]
+
+    def __init__(self):
+        for i in range(0, 8):
+            self.Ball[0].append(Image.open('pictures/' + str(i + 1) + 's.png'))
+            self.Ball[1].append(Image.open('pictures/' + str(i + 1) + 'n.png'))
+            self.Ball[2].append(Image.open('pictures/' + str(i + 1) + 'b.png'))
+
+
 def new_game():
     print('new gane')
     app.Map.Places()
@@ -63,6 +75,7 @@ class Main(Frame):
 
     def __init__(self, window):
         super().__init__(window)
+        self.p = Pictures()
         self.game = Field.GameHistory()
         self.Map.Places()
         self.init_main()
@@ -82,11 +95,10 @@ class Main(Frame):
         self.timer_Tick()
 
     def DrawNext(self, i, c):
-        path = 'pictures/' + str(c) + 'n.png'
-        self.ball = Image.open(path)
+        ball = self.p.Ball[1][c - 1].copy()
         size = (50, 50)
-        self.ball.thumbnail(size)
-        self.newballimg.paste(self.ball, (i * 50, 0))
+        ball.thumbnail(size)
+        self.newballimg.paste(ball, (i * 50, 0))
         self.newballimgrender = ImageTk.PhotoImage(self.newballimg)
         self.newball = Label(window, image=self.newballimgrender)
         self.newball.place(x=560, y=420)
@@ -101,12 +113,13 @@ class Main(Frame):
             if self.Map.Status == Field.Status.next_balls:
                 self.Paint()
                 self.Map.Status = Field.Status.wait
+                for i in range(0, 3):
+                    self.DrawNext(i, self.Map.Next_balls_mas[i].color)
             self.Score.config(text=('Счет: ' + str(int(self.Map.Score))))
             if self.Map.Status == Field.Status.end:
                 self.Map.ShowNextBalls()
                 self.Paint()
-        for i in range(0, 3):
-            self.DrawNext(i, self.Map.Next_balls_mas[i].color)
+
         self.Status = self.Map.Status
         self.after(100, self.timer_Tick)
 
@@ -130,24 +143,22 @@ class Main(Frame):
                     self.MAP[x][y].jump = self.Map.Map[x][y].jump
 
     def Draw(self, x, y, c, name, j):
-        path = 'pictures/' + str(c)
 
         if name == 'Next':
-            path += 's.png'
+            ball = self.p.Ball[0][c - 1]
         if name == 'Ball':
             if j == -1:
-                path += 's.png'
+                ball = self.p.Ball[0][c - 1]
             elif j == 1:
-                path += 'b.png'
+                ball = self.p.Ball[2][c - 1]
             elif c == 0:
-                path = 'pictures/path.png'
+                ball = self.p.Path
             else:
-                path += 'n.png'
+                ball = self.p.Ball[1][c - 1]
         if name == 'Empty':
-            path = 'pictures/empty.png'
+            ball = self.p.Empty
 
-        self.ball = Image.open(path)
-        self.img.paste(self.ball, (x * 60, y * 60))
+        self.img.paste(ball, (x * 60, y * 60))
         self.render = ImageTk.PhotoImage(self.img)
         self.initil = Label(window, image=self.render)
         self.initil.place(x=10, y=10)
@@ -203,6 +214,9 @@ class Main(Frame):
         self.newball = Label(window, image=newballimgrender)
         self.newball.place(x=560, y=420)
         self.newball.image = newballimgrender
+
+        for i in range(0, 3):
+            self.DrawNext(i, self.Map.Next_balls_mas[i].color)
 
 
 def func_img(event):

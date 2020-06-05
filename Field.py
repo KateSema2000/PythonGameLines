@@ -225,9 +225,6 @@ class Field(IField):
         self.paths = nr
         while nr >= 0:
 
-
-
-
             B = Empty(px, py, 0)
             if self.Map[px][py].name == "None":
                 B = Empty(px, py, 0)
@@ -309,7 +306,7 @@ class Field(IField):
             return
         if Y < 0 or Y >= self.max:
             return
-        if X + p * sx < 0 or X + (p - 1) * sx >= self.max:
+        if X + (p - 1) * sx < 0 or X + (p - 1) * sx >= self.max:
             return
         if Y + p * sy < 0 or Y + (p - 1) * sy >= self.max:
             return
