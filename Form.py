@@ -6,6 +6,7 @@ import Field
 class Pictures:
     Empty = Image.open('pictures/empty.png')
     Path = Image.open('pictures/path.png')
+    Field = Image.open("pictures/field.png")
     Ball = [[], [], []]
 
     def __init__(self):
@@ -25,7 +26,7 @@ def new_game():
             app.MAP[i].append(app.Map.Map[i][j])
 
     size = (Field.size_field, Field.size_field)
-    app.img = Image.open("pictures/field.png")
+    app.img =app.p.Field.clone()
     app.img.thumbnail(size)
     render = ImageTk.PhotoImage(app.img)
     app.initil = Label(window, image=render)
@@ -69,7 +70,6 @@ class Main(Frame):
     game = Field.GameHistory()
     step = 0
     initil = None
-    img = "pictures/field.png"
     Status = None
     MAP = []
 
@@ -165,7 +165,6 @@ class Main(Frame):
         self.initil.image = self.render
         self.initil.bind('<Button-1>', func_img)
 
-
     def init_main(self):
         size = (850, 565)
         phon = Image.open("pictures/background.jpg")
@@ -200,7 +199,7 @@ class Main(Frame):
                 self.MAP[i].append(self.Map.Map[i][j])
 
         size = (Field.size_field, Field.size_field)
-        self.img = Image.open("pictures/field.png")
+        self.img = self.p.Field
         self.img.thumbnail(size)
         render = ImageTk.PhotoImage(self.img)
         self.initil = Label(window, image=render)
