@@ -11,3 +11,7 @@
 **Предполагаемый макет интерфейса:**
 
 ![screenshot of sample](https://github.com/KateSema2000/ProjectPython/blob/master/plan/interface.png)
+
+**Готовый интерфейс*:*
+
+![screenshot of game](https://github.com/KateSema2000/PythonGameLines/blob/master/game.png)
